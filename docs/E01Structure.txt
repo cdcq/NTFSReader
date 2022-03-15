@@ -1,0 +1,648 @@
+
+0000000000 - 45 56 46 09 # EVF
+    00 08 | 45 56 46 09 0D 0A FF 00 # 标识符
+    08 01 | 01                      # 字段开始
+    09 02 | 01 00                   # 段号
+    0B 02 | 00 00                   # 字段结束
+000000000D - 68 65 61 64 # header
+    节头：
+    00 10 | 68 65 61 64 65 72 00 ..  # 节类型，header
+    10 08 | E6 00 00 00 00 00 00 00 # 下一段偏移，相对文件开始
+    18 08 | D9 00 00 00 00 00 00 00 # 节大小
+    20 28 | 00 ..                   # padding
+    48 04 | 29 04 BE 02             # checksum，使用Adler32算法
+    节内容：
+    header 看不懂，但是目前还不重要=。=
+00000000E6 - 68 65 61 64 # header
+    节头：
+    00 10 | 68 65 61 64 65 72 00 ..
+    10 08 | BF 01 00 00 00 00 00 00
+    18 08 | D9 00 00 00 00 00 00 00
+    20 28 | 00 ..
+    48 04 | 03 04 5E FA
+    节内容：
+    再 放 送
+00000001BF - 64 69 73 6B # disk
+    节头：
+    00 10 | 64 69 73 6B 00 ..
+    10 08 | 27 06 00 00 00 00 00 00
+    18 08 | 68 04 00 00 00 00 00 00
+    20 28 | 00 ..
+    48 04 | 45 02 DE 93
+    节内容：
+    不懂 ==
+0000000627 - 73 65 63 74 # sectors
+    节头：
+    00 10 | 73 65 63 74 6F 72 73 ..
+    10 08 | 4F 86 FC 1F 00 00 00 00
+    18 08 | 28 80 FC 1F 00 00 00 00
+    02 28 | 00 ..
+    48 04 | B7 06 60 8B
+0000000673 - 33 C0 8E D0 # DD文件开始
+
+0000008673 - 33 6E 08 23 # 第一块校验码
+
+001FFC864F - 74 61 62 6C # table
+    节头：
+    00 10 | 74 61 62 6C 65 00 ..
+    10 08 | 93 86 FD 1F 00 00 00 00
+    18 08 | 44 00 01 00 00 00 00 00
+    20 28 | 00 ..
+    48 04 | 86 04 43 14
+    表头：
+    00 04 | F7 3F 00 00             # 条目数，根据[ASR02]，它包含0x01（这是啥？？），最多可容纳16375个条目，如果
+                                    # 需要更多则应该创建一个额外的表（这里的值应该是真实值，不知道0x01是啥）
+    04 04 | 00 ..                   # padding
+    08 08 | ..                      # table base
+    10 04 | 00 ..                   # padding
+    14 04 | 37 01 0D 18             # checksum
+    表项：
+    00 04 | 73 06 00 00             # 数据块偏移，相对于table base（不是文件开头！）
+                                    # 最高有效位（MSB）指示块是压缩（1）还是非压缩（0）
+    ..
+    00 04 | 4B 06 FC 1F             # 0x1ffd868f处，最后一个表项，此data chunk后恰好就是这个table
+    表脚：
+    00 04 | 66 D7 F0 62             # checksum
+001FFD8690 - 74 61 62 6C # table2
+    节头：
+    00 10 | 74 61 62 6C 65 32 00 ..
+    10 08 | D7 86 FE 1F 00 00 00 00
+    18 08 | 44 00 01 00 00 00 00 00
+    20 28 | 00 ..
+    48 04 | FA 04 6F 30
+    表头：
+    再 放 送
+
+
+
+type: b'header\x00\x00'
+offset: 0x59
+progress: 0.00%
+type: b'header\x00\x00'
+offset: 0x132
+progress: 0.00%
+type: b'disk\x00\x00\x00\x00'
+offset: 0x20b
+progress: 0.00%
+type: b'sectors\x00'
+offset: 0x673
+progress: 0.00%
+type: b'table\x00\x00\x00'
+offset: 0x1ffc869b
+progress: 1.67%
+type: b'table2\x00\x00'
+offset: 0x1ffd86df
+progress: 1.67%
+type: b'sectors\x00'
+offset: 0x1ffe8723
+progress: 1.67%
+type: b'table\x00\x00\x00'
+offset: 0x3ffb074b
+progress: 3.33%
+type: b'table2\x00\x00'
+offset: 0x3ffc078f
+progress: 3.33%
+type: b'sectors\x00'
+offset: 0x3ffd07d3
+progress: 3.33%
+type: b'table\x00\x00\x00'
+offset: 0x5ff987fb
+progress: 5.00%
+type: b'table2\x00\x00'
+offset: 0x5ffa883f
+progress: 5.00%
+type: b'sectors\x00'
+offset: 0x5ffb8883
+progress: 5.00%
+type: b'table\x00\x00\x00'
+offset: 0x7ff808ab
+progress: 6.66%
+type: b'table2\x00\x00'
+offset: 0x7ff908ef
+progress: 6.66%
+type: b'sectors\x00'
+offset: 0x7ffa0933
+progress: 6.66%
+type: b'table\x00\x00\x00'
+offset: 0x9ff6895b
+progress: 8.33%
+type: b'table2\x00\x00'
+offset: 0x9ff7899f
+progress: 8.33%
+type: b'sectors\x00'
+offset: 0x9ff889e3
+progress: 8.33%
+type: b'table\x00\x00\x00'
+offset: 0xbff50a0b
+progress: 9.99%
+type: b'table2\x00\x00'
+offset: 0xbff60a4f
+progress: 9.99%
+type: b'sectors\x00'
+offset: 0xbff70a93
+progress: 9.99%
+type: b'table\x00\x00\x00'
+offset: 0xdff38abb
+progress: 11.66%
+type: b'table2\x00\x00'
+offset: 0xdff48aff
+progress: 11.66%
+type: b'sectors\x00'
+offset: 0xdff58b43
+progress: 11.66%
+type: b'table\x00\x00\x00'
+offset: 0xfff20b6b
+progress: 13.33%
+type: b'table2\x00\x00'
+offset: 0xfff30baf
+progress: 13.33%
+type: b'sectors\x00'
+offset: 0xfff40bf3
+progress: 13.33%
+type: b'table\x00\x00\x00'
+offset: 0x11ff08c1b
+progress: 14.99%
+type: b'table2\x00\x00'
+offset: 0x11ff18c5f
+progress: 14.99%
+type: b'sectors\x00'
+offset: 0x11ff28ca3
+progress: 14.99%
+type: b'table\x00\x00\x00'
+offset: 0x13fef0ccb
+progress: 16.66%
+type: b'table2\x00\x00'
+offset: 0x13ff00d0f
+progress: 16.66%
+type: b'sectors\x00'
+offset: 0x13ff10d53
+progress: 16.66%
+type: b'table\x00\x00\x00'
+offset: 0x15fed8d7b
+progress: 18.32%
+type: b'table2\x00\x00'
+offset: 0x15fee8dbf
+progress: 18.32%
+type: b'sectors\x00'
+offset: 0x15fef8e03
+progress: 18.32%
+type: b'table\x00\x00\x00'
+offset: 0x17fec0e2b
+progress: 19.99%
+type: b'table2\x00\x00'
+offset: 0x17fed0e6f
+progress: 19.99%
+type: b'sectors\x00'
+offset: 0x17fee0eb3
+progress: 19.99%
+type: b'table\x00\x00\x00'
+offset: 0x19fea8edb
+progress: 21.65%
+type: b'table2\x00\x00'
+offset: 0x19feb8f1f
+progress: 21.65%
+type: b'sectors\x00'
+offset: 0x19fec8f63
+progress: 21.65%
+type: b'table\x00\x00\x00'
+offset: 0x1bfe90f8b
+progress: 23.32%
+type: b'table2\x00\x00'
+offset: 0x1bfea0fcf
+progress: 23.32%
+type: b'sectors\x00'
+offset: 0x1bfeb1013
+progress: 23.32%
+type: b'table\x00\x00\x00'
+offset: 0x1dfe7903b
+progress: 24.99%
+type: b'table2\x00\x00'
+offset: 0x1dfe8907f
+progress: 24.99%
+type: b'sectors\x00'
+offset: 0x1dfe990c3
+progress: 24.99%
+type: b'table\x00\x00\x00'
+offset: 0x1ffe610eb
+progress: 26.65%
+type: b'table2\x00\x00'
+offset: 0x1ffe7112f
+progress: 26.65%
+type: b'sectors\x00'
+offset: 0x1ffe81173
+progress: 26.65%
+type: b'table\x00\x00\x00'
+offset: 0x21fe4919b
+progress: 28.32%
+type: b'table2\x00\x00'
+offset: 0x21fe591df
+progress: 28.32%
+type: b'sectors\x00'
+offset: 0x21fe69223
+progress: 28.32%
+type: b'table\x00\x00\x00'
+offset: 0x23fe3124b
+progress: 29.98%
+type: b'table2\x00\x00'
+offset: 0x23fe4128f
+progress: 29.98%
+type: b'sectors\x00'
+offset: 0x23fe512d3
+progress: 29.98%
+type: b'table\x00\x00\x00'
+offset: 0x25fe192fb
+progress: 31.65%
+type: b'table2\x00\x00'
+offset: 0x25fe2933f
+progress: 31.65%
+type: b'sectors\x00'
+offset: 0x25fe39383
+progress: 31.65%
+type: b'table\x00\x00\x00'
+offset: 0x27fe013ab
+progress: 33.31%
+type: b'table2\x00\x00'
+offset: 0x27fe113ef
+progress: 33.31%
+type: b'sectors\x00'
+offset: 0x27fe21433
+progress: 33.32%
+type: b'table\x00\x00\x00'
+offset: 0x29fde945b
+progress: 34.98%
+type: b'table2\x00\x00'
+offset: 0x29fdf949f
+progress: 34.98%
+type: b'sectors\x00'
+offset: 0x29fe094e3
+progress: 34.98%
+type: b'table\x00\x00\x00'
+offset: 0x2bfdd150b
+progress: 36.65%
+type: b'table2\x00\x00'
+offset: 0x2bfde154f
+progress: 36.65%
+type: b'sectors\x00'
+offset: 0x2bfdf1593
+progress: 36.65%
+type: b'table\x00\x00\x00'
+offset: 0x2dfdb95bb
+progress: 38.31%
+type: b'table2\x00\x00'
+offset: 0x2dfdc95ff
+progress: 38.31%
+type: b'sectors\x00'
+offset: 0x2dfdd9643
+progress: 38.31%
+type: b'table\x00\x00\x00'
+offset: 0x2ffda166b
+progress: 39.98%
+type: b'table2\x00\x00'
+offset: 0x2ffdb16af
+progress: 39.98%
+type: b'sectors\x00'
+offset: 0x2ffdc16f3
+progress: 39.98%
+type: b'table\x00\x00\x00'
+offset: 0x31fd8971b
+progress: 41.64%
+type: b'table2\x00\x00'
+offset: 0x31fd9975f
+progress: 41.64%
+type: b'sectors\x00'
+offset: 0x31fda97a3
+progress: 41.64%
+type: b'table\x00\x00\x00'
+offset: 0x33fd717cb
+progress: 43.31%
+type: b'table2\x00\x00'
+offset: 0x33fd8180f
+progress: 43.31%
+type: b'sectors\x00'
+offset: 0x33fd91853
+progress: 43.31%
+type: b'table\x00\x00\x00'
+offset: 0x35fd5987b
+progress: 44.97%
+type: b'table2\x00\x00'
+offset: 0x35fd698bf
+progress: 44.98%
+type: b'sectors\x00'
+offset: 0x35fd79903
+progress: 44.98%
+type: b'table\x00\x00\x00'
+offset: 0x37fd4192b
+progress: 46.64%
+type: b'table2\x00\x00'
+offset: 0x37fd5196f
+progress: 46.64%
+type: b'sectors\x00'
+offset: 0x37fd619b3
+progress: 46.64%
+type: b'table\x00\x00\x00'
+offset: 0x39fd299db
+progress: 48.31%
+type: b'table2\x00\x00'
+offset: 0x39fd39a1f
+progress: 48.31%
+type: b'sectors\x00'
+offset: 0x39fd49a63
+progress: 48.31%
+type: b'table\x00\x00\x00'
+offset: 0x3bfd11a8b
+progress: 49.97%
+type: b'table2\x00\x00'
+offset: 0x3bfd21acf
+progress: 49.97%
+type: b'sectors\x00'
+offset: 0x3bfd31b13
+progress: 49.97%
+type: b'table\x00\x00\x00'
+offset: 0x3dfcf9b3b
+progress: 51.64%
+type: b'table2\x00\x00'
+offset: 0x3dfd09b7f
+progress: 51.64%
+type: b'sectors\x00'
+offset: 0x3dfd19bc3
+progress: 51.64%
+type: b'table\x00\x00\x00'
+offset: 0x3ffce1beb
+progress: 53.30%
+type: b'table2\x00\x00'
+offset: 0x3ffcf1c2f
+progress: 53.30%
+type: b'sectors\x00'
+offset: 0x3ffd01c73
+progress: 53.30%
+type: b'table\x00\x00\x00'
+offset: 0x41fcc9c9b
+progress: 54.97%
+type: b'table2\x00\x00'
+offset: 0x41fcd9cdf
+progress: 54.97%
+type: b'sectors\x00'
+offset: 0x41fce9d23
+progress: 54.97%
+type: b'table\x00\x00\x00'
+offset: 0x43fcb1d4b
+progress: 56.64%
+type: b'table2\x00\x00'
+offset: 0x43fcc1d8f
+progress: 56.64%
+type: b'sectors\x00'
+offset: 0x43fcd1dd3
+progress: 56.64%
+type: b'table\x00\x00\x00'
+offset: 0x45fc99dfb
+progress: 58.30%
+type: b'table2\x00\x00'
+offset: 0x45fca9e3f
+progress: 58.30%
+type: b'sectors\x00'
+offset: 0x45fcb9e83
+progress: 58.30%
+type: b'table\x00\x00\x00'
+offset: 0x47fc81eab
+progress: 59.97%
+type: b'table2\x00\x00'
+offset: 0x47fc91eef
+progress: 59.97%
+type: b'sectors\x00'
+offset: 0x47fca1f33
+progress: 59.97%
+type: b'table\x00\x00\x00'
+offset: 0x49fc69f5b
+progress: 61.63%
+type: b'table2\x00\x00'
+offset: 0x49fc79f9f
+progress: 61.63%
+type: b'sectors\x00'
+offset: 0x49fc89fe3
+progress: 61.63%
+type: b'table\x00\x00\x00'
+offset: 0x4bfc5200b
+progress: 63.30%
+type: b'table2\x00\x00'
+offset: 0x4bfc6204f
+progress: 63.30%
+type: b'sectors\x00'
+offset: 0x4bfc72093
+progress: 63.30%
+type: b'table\x00\x00\x00'
+offset: 0x4dfc3a0bb
+progress: 64.96%
+type: b'table2\x00\x00'
+offset: 0x4dfc4a0ff
+progress: 64.96%
+type: b'sectors\x00'
+offset: 0x4dfc5a143
+progress: 64.96%
+type: b'table\x00\x00\x00'
+offset: 0x4ffc2216b
+progress: 66.63%
+type: b'table2\x00\x00'
+offset: 0x4ffc321af
+progress: 66.63%
+type: b'sectors\x00'
+offset: 0x4ffc421f3
+progress: 66.63%
+type: b'table\x00\x00\x00'
+offset: 0x51fc0a21b
+progress: 68.30%
+type: b'table2\x00\x00'
+offset: 0x51fc1a25f
+progress: 68.30%
+type: b'sectors\x00'
+offset: 0x51fc2a2a3
+progress: 68.30%
+type: b'table\x00\x00\x00'
+offset: 0x53fbf22cb
+progress: 69.96%
+type: b'table2\x00\x00'
+offset: 0x53fc0230f
+progress: 69.96%
+type: b'sectors\x00'
+offset: 0x53fc12353
+progress: 69.96%
+type: b'table\x00\x00\x00'
+offset: 0x55fbda37b
+progress: 71.63%
+type: b'table2\x00\x00'
+offset: 0x55fbea3bf
+progress: 71.63%
+type: b'sectors\x00'
+offset: 0x55fbfa403
+progress: 71.63%
+type: b'table\x00\x00\x00'
+offset: 0x57fbc242b
+progress: 73.29%
+type: b'table2\x00\x00'
+offset: 0x57fbd246f
+progress: 73.29%
+type: b'sectors\x00'
+offset: 0x57fbe24b3
+progress: 73.29%
+type: b'table\x00\x00\x00'
+offset: 0x59fbaa4db
+progress: 74.96%
+type: b'table2\x00\x00'
+offset: 0x59fbba51f
+progress: 74.96%
+type: b'sectors\x00'
+offset: 0x59fbca563
+progress: 74.96%
+type: b'table\x00\x00\x00'
+offset: 0x5bfb9258b
+progress: 76.62%
+type: b'table2\x00\x00'
+offset: 0x5bfba25cf
+progress: 76.62%
+type: b'sectors\x00'
+offset: 0x5bfbb2613
+progress: 76.62%
+type: b'table\x00\x00\x00'
+offset: 0x5dfb7a63b
+progress: 78.29%
+type: b'table2\x00\x00'
+offset: 0x5dfb8a67f
+progress: 78.29%
+type: b'sectors\x00'
+offset: 0x5dfb9a6c3
+progress: 78.29%
+type: b'table\x00\x00\x00'
+offset: 0x5ffb626eb
+progress: 79.96%
+type: b'table2\x00\x00'
+offset: 0x5ffb7272f
+progress: 79.96%
+type: b'sectors\x00'
+offset: 0x5ffb82773
+progress: 79.96%
+type: b'table\x00\x00\x00'
+offset: 0x61fb4a79b
+progress: 81.62%
+type: b'table2\x00\x00'
+offset: 0x61fb5a7df
+progress: 81.62%
+type: b'sectors\x00'
+offset: 0x61fb6a823
+progress: 81.62%
+type: b'table\x00\x00\x00'
+offset: 0x63fb3284b
+progress: 83.29%
+type: b'table2\x00\x00'
+offset: 0x63fb4288f
+progress: 83.29%
+type: b'sectors\x00'
+offset: 0x63fb528d3
+progress: 83.29%
+type: b'table\x00\x00\x00'
+offset: 0x65fb1a8fb
+progress: 84.95%
+type: b'table2\x00\x00'
+offset: 0x65fb2a93f
+progress: 84.95%
+type: b'sectors\x00'
+offset: 0x65fb3a983
+progress: 84.95%
+type: b'table\x00\x00\x00'
+offset: 0x67fb029ab
+progress: 86.62%
+type: b'table2\x00\x00'
+offset: 0x67fb129ef
+progress: 86.62%
+type: b'sectors\x00'
+offset: 0x67fb22a33
+progress: 86.62%
+type: b'table\x00\x00\x00'
+offset: 0x69faeaa5b
+progress: 88.28%
+type: b'table2\x00\x00'
+offset: 0x69fafaa9f
+progress: 88.28%
+type: b'sectors\x00'
+offset: 0x69fb0aae3
+progress: 88.28%
+type: b'table\x00\x00\x00'
+offset: 0x6bfad2b0b
+progress: 89.95%
+type: b'table2\x00\x00'
+offset: 0x6bfae2b4f
+progress: 89.95%
+type: b'sectors\x00'
+offset: 0x6bfaf2b93
+progress: 89.95%
+type: b'table\x00\x00\x00'
+offset: 0x6dfababbb
+progress: 91.62%
+type: b'table2\x00\x00'
+offset: 0x6dfacabff
+progress: 91.62%
+type: b'sectors\x00'
+offset: 0x6dfadac43
+progress: 91.62%
+type: b'table\x00\x00\x00'
+offset: 0x6ffaa2c6b
+progress: 93.28%
+type: b'table2\x00\x00'
+offset: 0x6ffab2caf
+progress: 93.28%
+type: b'sectors\x00'
+offset: 0x6ffac2cf3
+progress: 93.28%
+type: b'table\x00\x00\x00'
+offset: 0x71fa8ad1b
+progress: 94.95%
+type: b'table2\x00\x00'
+offset: 0x71fa9ad5f
+progress: 94.95%
+type: b'sectors\x00'
+offset: 0x71faaada3
+progress: 94.95%
+type: b'table\x00\x00\x00'
+offset: 0x73fa72dcb
+progress: 96.61%
+type: b'table2\x00\x00'
+offset: 0x73fa82e0f
+progress: 96.61%
+type: b'sectors\x00'
+offset: 0x73fa92e53
+progress: 96.61%
+type: b'table\x00\x00\x00'
+offset: 0x75fa5ae7b
+progress: 98.28%
+type: b'table2\x00\x00'
+offset: 0x75fa6aebf
+progress: 98.28%
+type: b'sectors\x00'
+offset: 0x75fa7af03
+progress: 98.28%
+type: b'table\x00\x00\x00'
+offset: 0x77fa42f2b
+progress: 99.94%
+type: b'table2\x00\x00'
+offset: 0x77fa52f6f
+progress: 99.94%
+type: b'sectors\x00'
+offset: 0x77fa62fb3
+progress: 99.95%
+type: b'table\x00\x00\x00'
+offset: 0x780b4386f
+progress: 100.00%
+type: b'table2\x00\x00'
+offset: 0x780b44147
+progress: 100.00%
+type: b'digest\x00\x00'
+offset: 0x780b44a1f
+progress: 100.00%
+type: b'hash\x00\x00\x00\x00'
+offset: 0x780b44abb
+progress: 100.00%
+type: b'data\x00\x00\x00\x00'
+offset: 0x780b44b2b
+progress: 100.00%
+type: b'done\x00\x00\x00\x00'
+offset: 0x780b44f93
+progress: 100.00%
+done
